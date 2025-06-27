@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import Swal from "sweetalert2";
 import useAuth from "../../store/authStore";
+import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
 
 function ReviewPage() {
     const { user } = useAuth();
@@ -15,7 +17,7 @@ function ReviewPage() {
     const refetchCards = async () => {
         if (!user?.id) return;
 
-        let query = supabase.from("cards").select("*, card_tags(tag_id)").eq("user_id", user.id);
+        let query = supabase.from("cards").select("*, card_tags(tag_id)").eq("user_id", user.id).order("created_at", { ascending: false });
 
         if (deckFilter) query = query.eq("deck_id", deckFilter);
         if (startDate) query = query.gte("created_at", startDate);
@@ -108,27 +110,42 @@ function ReviewPage() {
                     <ul className={styles.cardList}>
                         {cards.map((card) => (
                             <li key={card.id} className={styles.cardItem}>
-                                <strong>Q:</strong> {card.question}
-                                <br />
-                                <strong>A:</strong> {card.answer}
-                                <br />
-                                date:{" "}
-                                {new Date(card.created_at).toLocaleDateString("az-AZ", {
-                                    day: "2-digit",
-                                    month: "2-digit",
-                                    year: "numeric",
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                    second: "2-digit",
-                                    timeZone: "Asia/Baku",
-                                })}
-                                <div className={styles.cardActions}>
-                                    <button className={`${styles.actionBtn} ${styles.editBtn}`} onClick={() => handleEdit(card)}>
-                                        Edit
-                                    </button>
-                                    <button className={`${styles.actionBtn} ${styles.deleteBtn}`} onClick={() => handleDelete(card.id)}>
-                                        Delete
-                                    </button>
+                                <div>
+                                    <strong>Q:</strong> {card.question}
+                                    <br />
+                                    <strong>A:</strong> {card.answer}
+                                </div>
+                                <div>
+                                    <span className={styles.cardDate}>
+                                        {(() => {
+                                            const utcDate = new Date(card.created_at);
+                                            const bakuOffsetMs = 4 * 60 * 60 * 1000; // 4 saat fərq (UTC+4)
+                                            const bakuDate = new Date(utcDate.getTime() + bakuOffsetMs);
+
+                                            const dateStr = bakuDate.toLocaleDateString("az-AZ", {
+                                                day: "2-digit",
+                                                month: "2-digit",
+                                                year: "numeric",
+                                            });
+
+                                            const timeStr = bakuDate.toLocaleTimeString("az-AZ", {
+                                                hour: "2-digit",
+                                                minute: "2-digit",
+                                                second: "2-digit",
+                                                hour12: false,
+                                            });
+
+                                            return `${dateStr} ${timeStr}`;
+                                        })()}
+                                    </span>
+                                    <div className={styles.cardActions}>
+                                        <button className={`${styles.actionBtn}`} onClick={() => handleEdit(card)}>
+                                            <MdEdit size={20} color="blue" />
+                                        </button>
+                                        <button className={`${styles.actionBtn}`} onClick={() => handleDelete(card.id)}>
+                                            <MdDelete size={20} color="red" />
+                                        </button>
+                                    </div>
                                 </div>
                             </li>
                         ))}
