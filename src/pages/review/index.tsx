@@ -9,7 +9,7 @@ import useAuth from "../../store/authStore";
 
 function ReviewPage() {
     const { user } = useAuth();
-    const { deckFilter, tagFilter, setCards, cards } = useReviewStore();
+    const { deckFilter, tagFilter, setCards, cards, startDate, endDate, searchText } = useReviewStore();
 
     // Kartları gətirən funksiya
     const refetchCards = async () => {
@@ -18,6 +18,8 @@ function ReviewPage() {
         let query = supabase.from("cards").select("*, card_tags(tag_id)").eq("user_id", user.id);
 
         if (deckFilter) query = query.eq("deck_id", deckFilter);
+        if (startDate) query = query.gte("created_at", startDate);
+        if (endDate) query = query.lte("created_at", endDate);
 
         const { data, error } = await query;
         if (!data || error) return setCards([]);
@@ -27,12 +29,17 @@ function ReviewPage() {
             filtered = data.filter((card: any) => card.card_tags?.some((ct: any) => ct.tag_id === tagFilter));
         }
 
+        if (searchText.trim()) {
+            const text = searchText.trim().toLowerCase();
+            filtered = filtered.filter((card: any) => card.question.toLowerCase().includes(text));
+        }
+
         setCards(filtered);
     };
 
     useEffect(() => {
         refetchCards();
-    }, [deckFilter, tagFilter, user]);
+    }, [deckFilter, tagFilter, startDate, endDate, user, searchText]);
 
     // Redaktə funksiyası
     const handleEdit = async (card: any) => {
@@ -104,6 +111,17 @@ function ReviewPage() {
                                 <strong>Q:</strong> {card.question}
                                 <br />
                                 <strong>A:</strong> {card.answer}
+                                <br />
+                                date:{" "}
+                                {new Date(card.created_at).toLocaleDateString("az-AZ", {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                    second: "2-digit",
+                                    timeZone: "Asia/Baku",
+                                })}
                                 <div className={styles.cardActions}>
                                     <button className={`${styles.actionBtn} ${styles.editBtn}`} onClick={() => handleEdit(card)}>
                                         Edit

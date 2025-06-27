@@ -9,7 +9,7 @@ function ReviewFilters() {
     const [decks, setDecks] = useState<any[]>([]);
     const [tags, setTags] = useState<any[]>([]);
 
-    const { deckFilter, tagFilter, setDeckFilter, setTagFilter, setCards } = useReviewStore();
+    const { deckFilter, tagFilter, setDeckFilter, setTagFilter, setCards, startDate, endDate, setStartDate, setEndDate, searchText, setSearchText } = useReviewStore();
 
     useEffect(() => {
         const fetchFilters = async () => {
@@ -61,6 +61,11 @@ function ReviewFilters() {
                     </option>
                 ))}
             </select>
+            <input type="text" placeholder="Search by question" value={searchText} onChange={(e) => setSearchText(e.target.value)} className={styles.select} />
+
+            <input type="date" className={styles.select} value={startDate ?? ""} onChange={(e) => setStartDate(e.target.value || null)} />
+
+            <input type="date" className={styles.select} value={endDate ?? ""} onChange={(e) => setEndDate(e.target.value || null)} />
         </div>
     );
 }
