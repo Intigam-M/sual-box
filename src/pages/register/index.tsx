@@ -83,20 +83,19 @@ function RegisterPage() {
 
                         <div>
                             <label htmlFor="password" className={styles.label}>
-                                Şifrə
+                                Password
                             </label>
                             <input type="password" id="password" className={styles.input} placeholder="••••••••" {...register("password")} />
                             {errors.password && <span className="inputErrormsg">{errors.password.message}</span>}
                         </div>
 
-                        <input disabled={loading} type="submit" className={classNames(styles.button, { [styles.disabledBtn]: loading })} value={loading ? "Yüklənir..." : "Qeydiyyatdan keç"} />
+                        <input disabled={loading} type="submit" className={classNames(styles.button, { [styles.disabledBtn]: loading })} value={loading ? "Loading..." : "Register"} />
                     </form>
 
                     <p className={styles.footerText}>
-                        Artıq hesabınız var?
+                        Already have an account?
                         <NavLink to="/login" className={styles.link}>
-                            {" "}
-                            Daxil olun
+                            Log in
                         </NavLink>
                     </p>
                 </div>

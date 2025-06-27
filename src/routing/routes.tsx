@@ -5,11 +5,13 @@ import RegisterPage from "../pages/register";
 import QuizPage from "../pages/quiz";
 import CreateCardPage from "../pages/create";
 import ReviewPage from "../pages/review";
-import ManagePage from "../manage";
+import ManagePage from "../pages/manage";
+import PublicRoute from "./PublicRoute";
 
 const router = createBrowserRouter([
     {
         path: "/",
+        element: <PublicRoute />,
         errorElement: <LoginPage />,
         children: [
             { path: "/login", element: <LoginPage /> },

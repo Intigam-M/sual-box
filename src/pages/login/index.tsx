@@ -89,7 +89,7 @@ function LoginPage() {
 
                         <div>
                             <label htmlFor="password" className={styles.label}>
-                                Şifrə
+                                Password
                             </label>
                             <div className={styles.eyeDiv}>
                                 {showPassword ? (
@@ -102,13 +102,13 @@ function LoginPage() {
                             </div>
                         </div>
 
-                        <input disabled={loading} type="submit" className={classNames(styles.button, { [styles.disabledBtn]: loading })} value={loading ? "Yüklənir..." : "Daxil ol"} />
+                        <input disabled={loading} type="submit" className={classNames(styles.button, { [styles.disabledBtn]: loading })} value={loading ? "Loading..." : "Log in"} />
                     </form>
 
                     <p className={styles.footerText}>
-                        Hesabınız yoxdur?
+                        Don't have an account?{" "}
                         <NavLink to="/register" className={styles.link}>
-                            Qeydiyyatdan keçin
+                            Register
                         </NavLink>
                     </p>
                 </div>

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { supabase } from "../lib/supabaseClient";
+import { supabase } from "../../lib/supabaseClient";
 import { toast } from "react-hot-toast";
-import useAuth from "../store/authStore";
+import useAuth from "../../store/authStore";
 import styles from "./manage.module.css";
-import Navbar from "../components/navbar";
+import Navbar from "../../components/navbar";
 import { MdDelete } from "react-icons/md";
 import Swal from "sweetalert2";
 
@@ -29,7 +29,7 @@ function ManagePage() {
     const deleteItem = async (type: "deck" | "tag", id: string) => {
         const confirm = await Swal.fire({
             title: "Are you sure?",
-            text: `Deleting this ${type} will also delete all its cards. Are you sure?`,
+            text: type === "deck" ? "Deleting this deck will also delete all its cards. Are you sure?" : "This tag will be deleted.",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#d33",
