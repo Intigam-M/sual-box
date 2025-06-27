@@ -10,5 +10,4 @@ export interface CardI {
     question: string;
     answer: string;
     created_at: string;
-    tags?: string[];
 }

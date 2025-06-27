@@ -20,8 +20,8 @@ const router = createBrowserRouter([
         children: [
             { index: true, element: <QuizPage /> },
             { path: "*", element: <QuizPage /> },
-            { path: "/create-card", element: <CreateCardPage /> },
-            { path: "/revew", element: <ReviewPage /> },
+            { path: "/create", element: <CreateCardPage /> },
+            { path: "/review", element: <ReviewPage /> },
         ],
     },
 ]);

@@ -4,7 +4,7 @@ import QuizFilters from "../../components/quizFilters";
 import styles from "./quiz.module.css";
 
 function QuizPage() {
-    const { cards, currentIndex, flipped, quizFinished, flipCard, markCorrect, markWrong, wrongCards } = useQuizStore();
+    const { cards, currentIndex, flipped, quizFinished, flipCard, markCorrect, markWrong, wrongCards, extraCards } = useQuizStore();
 
     const currentCard = cards[currentIndex];
 
@@ -32,7 +32,11 @@ function QuizPage() {
 
                     <div className={styles.stats}>
                         <p>Qalan: {cards.length - currentIndex - 1}</p>
-                        <p>Səhv: {wrongCards.length}</p>
+                        <p>Səhv cavablar: {wrongCards.length}</p>
+                        <p>Əlavə kartlar: {extraCards.length}</p>
+                        <p>
+                            İrəliləyiş: {currentIndex + 1} / {cards.length}
+                        </p>
                     </div>
                 </div>
             )}
