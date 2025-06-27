@@ -11,3 +11,17 @@
     border: 1px solid #ccc;
     border-radius: 0.5rem;
 }
+
+
+.searchBtn {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.searchBtn:hover {
+    background-color: #1d4ed8;
+}
