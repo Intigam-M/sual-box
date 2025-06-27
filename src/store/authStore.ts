@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import axios from "../utils/axios";
 import { UserI } from "../utils/types";
 
 interface AuthState {
@@ -11,20 +10,15 @@ interface AuthState {
 const useAuth = create<AuthState>((set) => ({
     user: JSON.parse(localStorage.getItem("authInfo") || "null"),
 
-    login: (user) =>
-        set(() => {
-            localStorage.setItem("authInfo", JSON.stringify(user));
-            return { user };
-        }),
+    login: (user) => {
+        localStorage.setItem("authInfo", JSON.stringify(user));
+        set({ user });
+    },
 
-    logout: () =>
-        set((state) => {
-            localStorage.removeItem("authInfo");
-            if (state.user) {
-                axios.post("logout/", { email: state.user.email }, { headers: { Authorization: `Token ${state.user.token}` } });
-            }
-            return { user: null };
-        }),
+    logout: () => {
+        localStorage.removeItem("authInfo");
+        set({ user: null });
+    },
 }));
 
 export default useAuth;

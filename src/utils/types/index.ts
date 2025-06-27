@@ -1,9 +1,5 @@
 export interface UserI {
-    id: number;
-    email: string;
+    id: string;
+    email: string | null;
     token: string;
-    username: string;
-    first_name: string;
-    last_name: string;
-    is_superuser: boolean;
 }
