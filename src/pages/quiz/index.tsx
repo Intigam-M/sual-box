@@ -4,13 +4,45 @@ import QuizFilters from "../../components/quizFilters";
 import styles from "./quiz.module.css";
 
 function QuizPage() {
-    const cards = useQuizStore((state) => state.cards);
+    const { cards, currentIndex, flipped, quizFinished, flipCard, markCorrect, markWrong, wrongCards } = useQuizStore();
+
+    const currentCard = cards[currentIndex];
 
     return (
         <div>
             <Navbar />
             <QuizFilters />
-            <div className={styles.message}>{cards.length === 0 ? "No cards found. Please adjust your filters or add some cards." : `Found ${cards.length} cards. Ready to start quiz!`}</div>
+
+            {cards.length === 0 && <div className={styles.message}>No cards found. Please adjust your filters or add some cards.</div>}
+
+            {cards.length > 0 && !quizFinished && currentCard && (
+                <div className={styles.quizContainer}>
+                    <div className={`${styles.card} ${flipped ? styles.flipped : ""}`} onClick={flipCard}>
+                        <div className={styles.cardFront}>{flipped ? currentCard.answer : currentCard.question}</div>
+                    </div>
+
+                    <div className={styles.actions}>
+                        <button onClick={markCorrect} className={styles.correctBtn}>
+                            Correct
+                        </button>
+                        <button onClick={markWrong} className={styles.wrongBtn}>
+                            Wrong
+                        </button>
+                    </div>
+
+                    <div className={styles.stats}>
+                        <p>Qalan: {cards.length - currentIndex - 1}</p>
+                        <p>Səhv: {wrongCards.length}</p>
+                    </div>
+                </div>
+            )}
+
+            {quizFinished && (
+                <div className={styles.message}>
+                    Quiz tamamlandı! ✅ <br />
+                    Səhv cavablar: {wrongCards.length}
+                </div>
+            )}
         </div>
     );
 }
