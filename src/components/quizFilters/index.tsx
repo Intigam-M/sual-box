@@ -3,7 +3,7 @@ import { useQuizStore } from "../../store/quizStore";
 import { supabase } from "../../lib/supabaseClient";
 import { fetchFilteredCards } from "../../lib/fetchCards";
 import useAuth from "../../store/authStore";
-import styles from "./QuizFilters.module.css";
+import styles from "./quizFilters.module.css";
 
 function QuizFilters() {
     const { user } = useAuth();
