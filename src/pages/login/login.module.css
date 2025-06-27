@@ -102,6 +102,10 @@
   align-items: center;
 }
 
+.passDiv{
+  display: flex;
+}
+
 .icon {
   position: absolute;
   right: 0.75rem;

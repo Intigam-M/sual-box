@@ -83,8 +83,10 @@ function LoginPage() {
                             <label htmlFor="email" className={styles.label}>
                                 Email
                             </label>
-                            <input type="email" id="email" className={styles.input} placeholder="name@company.com" {...register("email")} />
-                            {errors.email && <span className="inputErrormsg">{errors.email.message}</span>}
+                            <div className={styles.passDiv}>
+                                <input type="email" id="email" className={styles.input} placeholder="name@company.com" {...register("email")} />
+                                {errors.email && <span className="inputErrormsg">{errors.email.message}</span>}
+                            </div>
                         </div>
 
                         <div>

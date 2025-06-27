@@ -9,8 +9,8 @@ import Swal from "sweetalert2";
 import styles from "./register.module.css";
 
 const schema = z.object({
-    email: z.string().email({ message: "Düzgün email yazın" }),
-    password: z.string().min(6, { message: "Şifrə minimum 6 simvol olmalıdır" }),
+    email: z.string().email({ message: "Please enter a valid email address" }),
+    password: z.string().min(6, { message: "Password must be at least 6 characters" }),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -45,19 +45,18 @@ function RegisterPage() {
 
         if (signUpData.user && signUpData.session) {
             navigate("/");
-
             Swal.fire({
                 icon: "success",
-                title: "Qeydiyyat tamamlandı",
-                text: "Uğurla daxil oldunuz!",
+                title: "Registration completed",
+                text: "You have successfully logged in!",
                 timer: 2000,
                 showConfirmButton: false,
             });
         } else {
             Swal.fire({
                 icon: "info",
-                title: "Təsdiq Emaili Göndərildi",
-                text: "Zəhmət olmasa emailinizi təsdiqləyin.",
+                title: "Confirmation Email Sent",
+                text: "Please check your email to verify your account.",
             });
         }
 

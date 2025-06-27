@@ -11,10 +11,10 @@ import Navbar from "../../components/navbar";
 import { toast } from "react-hot-toast";
 
 const schema = z.object({
-    deck: z.string().min(1, "Deck seçilməlidir"),
+    deck: z.string().min(1, "Deck must be selected"),
     tags: z.array(z.string()).optional(),
-    question: z.string().min(1, "Sual boş ola bilməz"),
-    answer: z.string().min(1, "Cavab boş ola bilməz"),
+    question: z.string().min(1, "Question cannot be empty"),
+    answer: z.string().min(1, "Answer cannot be empty"),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -56,10 +56,10 @@ function CreateCardPage() {
         const { data, error } = await supabase.from("tags").insert({ name: tagName.trim(), user_id: user.id }).select().single();
 
         if (error) {
-            toast.error("Tag yaratmaq mümkün olmadı");
+            toast.error("Failed to create tag");
         } else {
             setTags((prev) => [...prev, data]);
-            toast.success("Tag yaradıldı");
+            toast.success("Tag created successfully");
         }
     };
 
@@ -78,10 +78,10 @@ function CreateCardPage() {
         const { data, error } = await supabase.from("decks").insert({ name: deckName.trim(), user_id: user.id }).select().single();
 
         if (error) {
-            toast.error("Deck yaratmaq mümkün olmadı");
+            toast.error("Failed to create deck");
         } else {
             setDecks((prev) => [...prev, data]);
-            toast.success("Deck yaradıldı");
+            toast.success("Deck created successfully");
         }
     };
 
@@ -91,7 +91,7 @@ function CreateCardPage() {
         const { data: cardData, error: cardError } = await supabase.from("cards").insert({ user_id: user?.id, deck_id: deck, question, answer }).select().single();
 
         if (cardError || !cardData) {
-            toast.error("Kart əlavə edilərkən xəta baş verdi");
+            toast.error("An error occurred while adding the card");
             return;
         }
 
@@ -103,7 +103,7 @@ function CreateCardPage() {
             });
         }
 
-        toast.success("Kart əlavə olundu");
+        toast.success("Card added successfully");
     };
 
     return (
