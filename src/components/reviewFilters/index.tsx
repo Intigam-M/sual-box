@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "../../lib/supabaseClient";
 import { useReviewStore } from "../../store/reviewStore";
 import useAuth from "../../store/authStore";
-import styles from "./ReviewFilters.module.css";
+import styles from "./reviewFilters.module.css";
 
 function ReviewFilters() {
     const { user } = useAuth();
