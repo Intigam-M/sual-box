@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import PrivateRoutes from "./PrivateRoutes";
 import LoginPage from "../pages/login";
 import RegisterPage from "../pages/register";
-import HomePage from "../pages/home";
+import QuizPage from "../pages/quiz";
 
 const router = createBrowserRouter([
     {
@@ -16,8 +16,8 @@ const router = createBrowserRouter([
     {
         element: <PrivateRoutes />,
         children: [
-            { index: true, element: <HomePage /> },
-            { path: "*", element: <HomePage /> },
+            { index: true, element: <QuizPage /> },
+            { path: "*", element: <QuizPage /> },
         ],
     },
 ]);

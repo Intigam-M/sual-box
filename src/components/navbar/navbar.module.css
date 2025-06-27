@@ -1,0 +1,48 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    color: #2563eb;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav a {
+    margin: 0 1rem;
+    text-decoration: none;
+    color: #333;
+}
+
+.nav a:hover {
+    color: #2563eb;
+}
+
+.active {
+    background-color: #e0edff;
+    padding: 0.3rem 0.8rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    color: #2563eb;
+}
+
+.signOut {
+    border: 1px solid #2563eb;
+    background: white;
+    padding: 0.4rem 1rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    color: #2563eb;
+    font-weight: 500;
+    transition: 0.2s;
+}
+
+.signOut:hover {
+    background: #2563eb;
+    color: white;
+}
