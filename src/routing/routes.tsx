@@ -4,6 +4,7 @@ import LoginPage from "../pages/login";
 import RegisterPage from "../pages/register";
 import QuizPage from "../pages/quiz";
 import CreateCardPage from "../pages/create";
+import ReviewPage from "../pages/review";
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
             { index: true, element: <QuizPage /> },
             { path: "*", element: <QuizPage /> },
             { path: "/create-card", element: <CreateCardPage /> },
+            { path: "/revew", element: <ReviewPage /> },
         ],
     },
 ]);
