@@ -4,11 +4,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useNavigate, NavLink } from "react-router-dom";
 import classNames from "classnames";
-import Swal from "sweetalert2";
-
 import { supabase } from "../../lib/supabaseClient";
 import useAuth from "../../store/authStore";
-
 import { SlEye } from "react-icons/sl";
 import { TbEyeClosed } from "react-icons/tb";
 import styles from "./login.module.css"; // Əgər register.css eynidirsə, onu import et
@@ -68,13 +65,6 @@ function LoginPage() {
 
             login(user as UserI);
             navigate("/");
-
-            Swal.fire({
-                icon: "success",
-                title: "Uğurlu giriş",
-                timer: 2000,
-                showConfirmButton: false,
-            });
         }
 
         setLoading(false);

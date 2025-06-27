@@ -20,6 +20,7 @@ function Navbar() {
                 </NavLink>
                 <NavLink to="/review">Review</NavLink>
                 <NavLink to="/create">Create Card</NavLink>
+                <NavLink to="/manage">Manage</NavLink>
                 <button onClick={handleLogout} className={styles.signOut}>
                     Sign Out
                 </button>

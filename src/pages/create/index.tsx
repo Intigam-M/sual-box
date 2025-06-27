@@ -4,11 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-
 import { supabase } from "../../lib/supabaseClient";
 import useAuth from "../../store/authStore";
 import styles from "./createCard.module.css";
 import Navbar from "../../components/navbar";
+import { toast } from "react-hot-toast";
 
 const schema = z.object({
     deck: z.string().min(1, "Deck seçilməlidir"),
@@ -56,10 +56,10 @@ function CreateCardPage() {
         const { data, error } = await supabase.from("tags").insert({ name: tagName.trim(), user_id: user.id }).select().single();
 
         if (error) {
-            Swal.fire("Error", "Tag yaratmaq mümkün olmadı", "error");
+            toast.error("Tag yaratmaq mümkün olmadı");
         } else {
             setTags((prev) => [...prev, data]);
-            Swal.fire("Uğurlu", "Tag yaradıldı", "success");
+            toast.success("Tag yaradıldı");
         }
     };
 
@@ -78,10 +78,10 @@ function CreateCardPage() {
         const { data, error } = await supabase.from("decks").insert({ name: deckName.trim(), user_id: user.id }).select().single();
 
         if (error) {
-            Swal.fire("Error", "Deck yaratmaq mümkün olmadı", "error");
+            toast.error("Deck yaratmaq mümkün olmadı");
         } else {
             setDecks((prev) => [...prev, data]);
-            Swal.fire("Uğurlu", "Deck yaradıldı", "success");
+            toast.success("Deck yaradıldı");
         }
     };
 
@@ -91,7 +91,7 @@ function CreateCardPage() {
         const { data: cardData, error: cardError } = await supabase.from("cards").insert({ user_id: user?.id, deck_id: deck, question, answer }).select().single();
 
         if (cardError || !cardData) {
-            Swal.fire("Xəta", "Kart əlavə edilərkən xəta baş verdi", "error");
+            toast.error("Kart əlavə edilərkən xəta baş verdi");
             return;
         }
 
@@ -103,8 +103,7 @@ function CreateCardPage() {
             });
         }
 
-        Swal.fire("Uğurlu", "Kart əlavə olundu!", "success");
-        navigate("/review");
+        toast.success("Kart əlavə olundu");
     };
 
     return (

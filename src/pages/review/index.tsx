@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import useAuth from "../../store/authStore";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
+import { toast } from "react-hot-toast";
 
 function ReviewPage() {
     const { user } = useAuth();
@@ -68,23 +69,22 @@ function ReviewPage() {
         const { error } = await supabase.from("cards").update({ question: formValues.question, answer: formValues.answer }).eq("id", card.id);
 
         if (error) {
-            Swal.fire("Error", "Redaktə mümkün olmadı", "error");
+            toast.error("Failed to update card");
         } else {
-            Swal.fire("Uğurlu", "Kart yeniləndi", "success");
-            refetchCards();
+            toast.success("Card updated successfully");
         }
     };
 
-    // 💡 Silmək funksiyası
     const handleDelete = async (cardId: string) => {
         const confirm = await Swal.fire({
-            title: "Əminsiniz?",
-            text: "Bu kart silinəcək!",
+            title: "Are you sure?",
+            text: `This card will be deleted!`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#d33",
             cancelButtonColor: "#3085d6",
-            confirmButtonText: "Bəli, sil",
+            confirmButtonText: "Yes, delete it",
+            cancelButtonText: "Cancel",
         });
 
         if (!confirm.isConfirmed) return;
@@ -92,9 +92,9 @@ function ReviewPage() {
         const { error } = await supabase.from("cards").delete().eq("id", cardId);
 
         if (error) {
-            Swal.fire("Xəta", "Silinmə zamanı problem oldu", "error");
+            toast.error("An error occurred while deleting the card");
         } else {
-            Swal.fire("Silindi", "Kart uğurla silindi", "success");
+            toast.success("Card deleted successfully");
             refetchCards();
         }
     };
