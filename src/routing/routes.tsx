@@ -7,6 +7,7 @@ import CreateCardPage from "../pages/create";
 import ReviewPage from "../pages/review";
 import ManagePage from "../pages/manage";
 import PublicRoute from "./PublicRoute";
+import { Navigate } from "react-router-dom";
 
 const router = createBrowserRouter([
     {
@@ -22,10 +23,10 @@ const router = createBrowserRouter([
         element: <PrivateRoutes />,
         children: [
             { index: true, element: <QuizPage /> },
-            { path: "*", element: <QuizPage /> },
             { path: "/create", element: <CreateCardPage /> },
             { path: "/review", element: <ReviewPage /> },
             { path: "/manage", element: <ManagePage /> },
+            { path: "*", element: <Navigate to="/" replace /> },
         ],
     },
 ]);
