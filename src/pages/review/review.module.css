@@ -42,3 +42,11 @@
     font-size: 0.8rem;
     color: #888;
 }
+
+.resultCount {
+    text-align: center;
+    margin: 1rem 0;
+    font-weight: 500;
+    color: #444;
+}
+

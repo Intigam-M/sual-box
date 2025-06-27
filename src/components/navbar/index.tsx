@@ -18,9 +18,15 @@ function Navbar() {
                 <NavLink to="/" className={({ isActive }) => (isActive ? styles.active : "")}>
                     Quiz
                 </NavLink>
-                <NavLink to="/review">Review</NavLink>
-                <NavLink to="/create">Create Card</NavLink>
-                <NavLink to="/manage">Manage</NavLink>
+                <NavLink to="/review" className={({ isActive }) => (isActive ? styles.active : "")}>
+                    Review
+                </NavLink>
+                <NavLink to="/create" className={({ isActive }) => (isActive ? styles.active : "")}>
+                    Create Card
+                </NavLink>
+                <NavLink to="/manage" className={({ isActive }) => (isActive ? styles.active : "")}>
+                    Manage
+                </NavLink>
                 <button onClick={handleLogout} className={styles.signOut}>
                     Sign Out
                 </button>

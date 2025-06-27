@@ -15,6 +15,8 @@ interface ReviewState {
     startDate: string | null;
     endDate: string | null;
     searchText: string;
+    totalCardCount: number;
+    setTotalCardCount: (count: number) => void;
     setSearchText: (text: string) => void;
     setStartDate: (date: string | null) => void;
     setEndDate: (date: string | null) => void;
@@ -30,6 +32,8 @@ export const useReviewStore = create<ReviewState>((set) => ({
     startDate: null,
     endDate: null,
     searchText: "",
+    totalCardCount: 0,
+    setTotalCardCount: (count) => set({ totalCardCount: count }),
     setSearchText: (text) => set({ searchText: text }),
     setStartDate: (date) => set({ startDate: date }),
     setEndDate: (date) => set({ endDate: date }),

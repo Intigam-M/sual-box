@@ -12,11 +12,14 @@ import { toast } from "react-hot-toast";
 
 function ReviewPage() {
     const { user } = useAuth();
-    const { deckFilter, tagFilter, setCards, cards, startDate, endDate, searchText } = useReviewStore();
+    const { deckFilter, tagFilter, setCards, cards, startDate, endDate, searchText, setTotalCardCount, totalCardCount } = useReviewStore();
 
     // Kartları gətirən funksiya
     const refetchCards = async () => {
         if (!user?.id) return;
+        // Ümumi kart sayı (filtrsüz)
+        const totalRes = await supabase.from("cards").select("*", { count: "exact", head: true }).eq("user_id", user.id);
+        if (totalRes.count !== null) setTotalCardCount(totalRes.count);
 
         let query = supabase.from("cards").select("*, card_tags(tag_id)").eq("user_id", user.id).order("created_at", { ascending: false });
 
@@ -102,6 +105,10 @@ function ReviewPage() {
         <div>
             <Navbar />
             <ReviewFilters />
+
+            <p className={styles.resultCount}>
+                Showing {cards.length} of {totalCardCount} cards
+            </p>
 
             <div className={styles.message}>
                 {cards.length === 0 ? (

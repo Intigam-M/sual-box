@@ -31,11 +31,11 @@ function QuizPage() {
                     </div>
 
                     <div className={styles.stats}>
-                        <p>Qalan: {cards.length - currentIndex - 1}</p>
-                        <p>Səhv cavablar: {wrongCards.length}</p>
-                        <p>Əlavə kartlar: {extraCards.length}</p>
+                        <p>Remaining: {cards.length - currentIndex - 1}</p>
+                        <p>Wrong answers: {wrongCards.length}</p>
+                        <p>Extra cards: {extraCards.length}</p>
                         <p>
-                            İrəliləyiş: {currentIndex + 1} / {cards.length}
+                            Progress: {currentIndex + 1} / {cards.length}
                         </p>
                     </div>
                 </div>
