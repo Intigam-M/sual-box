@@ -1,0 +1,79 @@
+.container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.heading {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    margin-bottom: 1.25rem;
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+}
+
+.inlineBtn {
+    margin-top: 0.5rem;
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+    border: 1px solid #2563eb;
+    background: white;
+    color: #2563eb;
+    border-radius: 0.4rem;
+    cursor: pointer;
+}
+
+.inlineBtn:hover {
+    background: #2563eb;
+    color: white;
+}
+
+.error {
+    color: red;
+    font-size: 0.85rem;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.createBtn {
+    background-color: #2563eb;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.cancelBtn {
+    background-color: #dc2626;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+}
