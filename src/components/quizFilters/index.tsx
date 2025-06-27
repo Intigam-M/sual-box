@@ -58,7 +58,7 @@ function QuizFilters() {
             <input type="date" value={endDate ?? ""} onChange={(e) => setFilters(selectedDeck, selectedTag, startDate, e.target.value)} className={styles.dateInput} />
 
             <button onClick={handleSearch} className={styles.searchBtn}>
-                Axtar
+                Search
             </button>
         </div>
     );

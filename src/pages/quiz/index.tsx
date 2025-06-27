@@ -43,8 +43,8 @@ function QuizPage() {
 
             {quizFinished && (
                 <div className={styles.message}>
-                    Quiz tamamlandı! ✅ <br />
-                    Səhv cavablar: {wrongCards.length}
+                    Quiz completed! ✅ <br />
+                    Wrong answers: {wrongCards.length}
                 </div>
             )}
         </div>

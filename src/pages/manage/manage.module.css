@@ -47,3 +47,13 @@ li {
     border-radius: 0.4rem;
     cursor: pointer;
 }
+
+
+.emptyMessage {
+    text-align: center;
+    color: #666;
+    margin-top: 2rem;
+    font-style: italic;
+    font-size: 1.1rem;
+  }
+  

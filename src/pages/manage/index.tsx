@@ -57,30 +57,36 @@ function ManagePage() {
         <div>
             <Navbar />
             <div className={styles.container}>
-                <h2>Manage Decks</h2>
-                <ul>
-                    {decks.map((deck) => (
-                        <li key={deck.id}>
-                            {deck.name}
-                            <button className={styles.deleteBtn} onClick={() => deleteItem("deck", deck.id)}>
-                                <MdDelete />
-                            </button>
-                        </li>
-                    ))}
-                </ul>
+                {decks.length === 0 && tags.length === 0 ? (
+                    <div className={styles.emptyMessage}>You don’t have any decks or tags yet.</div>
+                ) : (
+                    <>
+                        <h2>Manage Decks</h2>
+                        <ul>
+                            {decks.map((deck) => (
+                                <li key={deck.id}>
+                                    {deck.name}
+                                    <button className={styles.deleteBtn} onClick={() => deleteItem("deck", deck.id)}>
+                                        <MdDelete />
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
 
-                <h2>Manage Tags</h2>
+                        <h2>Manage Tags</h2>
 
-                <ul>
-                    {tags.map((tag) => (
-                        <li key={tag.id}>
-                            {tag.name}
-                            <button className={styles.deleteBtn} onClick={() => deleteItem("tag", tag.id)}>
-                                <MdDelete />
-                            </button>
-                        </li>
-                    ))}
-                </ul>
+                        <ul>
+                            {tags.map((tag) => (
+                                <li key={tag.id}>
+                                    {tag.name}
+                                    <button className={styles.deleteBtn} onClick={() => deleteItem("tag", tag.id)}>
+                                        <MdDelete />
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </>
+                )}
             </div>
         </div>
     );
