@@ -11,3 +11,17 @@ export interface CardI {
     answer: string;
     created_at: string;
 }
+
+export interface DeckI {
+    id: string;
+    name: string;
+    user_id: string;
+    created_at: string;
+}
+
+export interface TagI {
+    id: string;
+    name: string;
+    user_id: string;
+    created_at: string;
+}
