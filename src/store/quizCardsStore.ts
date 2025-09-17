@@ -10,7 +10,7 @@ interface QuizCardsStoreI {
     flipCard: () => void;
 }
 
-const quizCardsStore = create<QuizCardsStoreI>((set) => ({
+const useQuizCardsStore = create<QuizCardsStoreI>((set) => ({
     cards: [],
     flipped: false,
     setCards: (cards) => set({ cards }),
@@ -19,4 +19,4 @@ const quizCardsStore = create<QuizCardsStoreI>((set) => ({
     flipCard: () => set((state) => ({ flipped: !state.flipped })),
 }));
 
-export default quizCardsStore;
+export default useQuizCardsStore;

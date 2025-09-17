@@ -1,19 +1,19 @@
 import { create } from "zustand";
-import { TagService } from "../services/tags.service";
+import { DeckService } from "../services/decks.service";
 import useAuth from "./authStore";
 import { DeckI } from "../utils/types";
 
-interface DescStoreI {
+interface DeckStoreI {
     descs: DeckI[];
     fetchDescs: () => Promise<void>;
 }
 
-const descStore = create<DescStoreI>((set) => ({
+const useDeckStore = create<DeckStoreI>((set) => ({
     descs: [],
     fetchDescs: async () => {
-        const descs = await TagService.getTagsByUser(useAuth.getState().user?.id || "");
+        const descs = await DeckService.getDecksByUser(useAuth.getState().user?.id || "");
         set({ descs });
     },
 }));
 
-export default descStore;
+export default useDeckStore;

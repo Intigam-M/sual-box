@@ -3,14 +3,12 @@ import { TagService } from "../services/tags.service";
 import useAuth from "./authStore";
 import { TagI } from "../utils/types";
 
-//   const { user } = useAuth();
-
 interface TagStoreI {
     tags: TagI[];
     fetchTags: () => Promise<void>;
 }
 
-const tagStore = create<TagStoreI>((set) => ({
+const useTagStore = create<TagStoreI>((set) => ({
     tags: [],
     fetchTags: async () => {
         const tags = await TagService.getTagsByUser(useAuth.getState().user?.id || "");
@@ -18,4 +16,4 @@ const tagStore = create<TagStoreI>((set) => ({
     },
 }));
 
-export default tagStore;
+export default useTagStore;

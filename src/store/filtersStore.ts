@@ -8,7 +8,7 @@ interface FiltersStoreI {
     setFilters: (deck: string, tag: string, start: string | null, end: string | null) => void;
 }
 
-const filtersStore = create<FiltersStoreI>((set) => ({
+const useFiltersStore = create<FiltersStoreI>((set) => ({
     selectedDeck: "",
     selectedTag: "",
     startDate: null,
@@ -22,4 +22,4 @@ const filtersStore = create<FiltersStoreI>((set) => ({
         }),
 }));
 
-export default filtersStore;
+export default useFiltersStore;

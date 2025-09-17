@@ -10,7 +10,7 @@ interface ResultStoreI {
     resetResults: () => void;
 }
 
-const resultStore = create<ResultStoreI>((set) => ({
+const useResultStore = create<ResultStoreI>((set) => ({
     wrongCards: [],
     correctCards: [],
     totalCards: 0,
@@ -31,4 +31,4 @@ const resultStore = create<ResultStoreI>((set) => ({
         }),
 }));
 
-export default resultStore;
+export default useResultStore;
