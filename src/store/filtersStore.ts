@@ -1,25 +1,23 @@
 import { create } from "zustand";
 
 interface FiltersStoreI {
-    selectedDeck: string;
-    selectedTag: string;
+    selectedDeck: string | null;
+    selectedTag: string | null;
     startDate: string | null;
     endDate: string | null;
-    setFilters: (deck: string, tag: string, start: string | null, end: string | null) => void;
+    setFilters: (filters: Partial<FiltersStoreI>) => void;
 }
 
 const useFiltersStore = create<FiltersStoreI>((set) => ({
-    selectedDeck: "",
-    selectedTag: "",
+    selectedDeck: null,
+    selectedTag: null,
     startDate: null,
     endDate: null,
-    setFilters: (deck, tag, start, end) =>
-        set({
-            selectedDeck: deck,
-            selectedTag: tag,
-            startDate: start,
-            endDate: end,
-        }),
+    setFilters: (filters) =>
+        set((state) => ({
+            ...state,
+            ...filters,
+        })),
 }));
 
 export default useFiltersStore;

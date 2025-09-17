@@ -25,3 +25,10 @@ export interface TagI {
     user_id: string;
     created_at: string;
 }
+
+export interface FilterDataI {
+    selectedDeck: string | null;
+    selectedTag: string | null;
+    startDate: string | null;
+    endDate: string | null;
+}

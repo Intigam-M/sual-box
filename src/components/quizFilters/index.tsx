@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import { useQuizStore } from "../../store/quizStore";
-import { fetchFilteredCards } from "../../lib/fetchCards";
+import { fetchFilteredCards } from "../../services/cards.service";
 import useAuth from "../../store/authStore";
 import styles from "./quizFilters.module.css";
 import useDeckStore from "../../store/deckStore";
 import useTagStore from "../../store/tagStore";
+import useFiltersStore from "../../store/filtersStore";
+import { FilterDataI } from "../../utils/types";
 
 function QuizFilters() {
     const { user } = useAuth();
-    const { selectedDeck, selectedTag, startDate, endDate, setFilters, setCards } = useQuizStore();
+    const { setCards } = useQuizStore();
+    const { selectedDeck, selectedTag, startDate, endDate, setFilters } = useFiltersStore();
 
     const fetchDescs = useDeckStore((state) => state.fetchDescs);
     const fetchTags = useTagStore((state) => state.fetchTags);
@@ -22,10 +25,16 @@ function QuizFilters() {
 
     const handleSearch = async () => {
         if (!user?.id) return;
-        setFilters(selectedDeck, selectedTag, startDate, endDate);
+
+        const filterData: FilterDataI = {
+            selectedDeck,
+            selectedTag,
+            startDate,
+            endDate,
+        };
 
         try {
-            const cards = await fetchFilteredCards(user.id, selectedDeck, selectedTag, startDate, endDate);
+            const cards = await fetchFilteredCards(user.id, filterData);
             setCards(cards);
         } catch (err) {
             console.error("Error loading cards:", err);
@@ -35,8 +44,8 @@ function QuizFilters() {
     return (
         <div className={styles.filterContainer}>
             <select
-                value={selectedDeck}
-                onChange={(e) => setFilters(e.target.value, selectedTag, startDate, endDate)}
+                value={selectedDeck ?? ""}
+                onChange={(e) => setFilters({ selectedDeck: e.target.value })}
                 className={styles.select}
             >
                 <option value="">Select Deck</option>
@@ -48,8 +57,8 @@ function QuizFilters() {
             </select>
 
             <select
-                value={selectedTag}
-                onChange={(e) => setFilters(selectedDeck, e.target.value, startDate, endDate)}
+                value={selectedTag ?? ""}
+                onChange={(e) => setFilters({ selectedTag: e.target.value })}
                 className={styles.select}
             >
                 <option value="">Select Tag</option>
@@ -63,13 +72,13 @@ function QuizFilters() {
             <input
                 type="date"
                 value={startDate ?? ""}
-                onChange={(e) => setFilters(selectedDeck, selectedTag, e.target.value, endDate)}
+                onChange={(e) => setFilters({ startDate: e.target.value })}
                 className={styles.dateInput}
             />
             <input
                 type="date"
                 value={endDate ?? ""}
-                onChange={(e) => setFilters(selectedDeck, selectedTag, startDate, e.target.value)}
+                onChange={(e) => setFilters({ endDate: e.target.value })}
                 className={styles.dateInput}
             />
 
