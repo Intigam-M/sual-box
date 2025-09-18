@@ -44,7 +44,6 @@ function QuizFilters() {
 
         try {
             const cards = await fetchFilteredCards(user.id, filterData);
-            console.log("Fetched cards:", cards);
             setCards(cards);
         } catch (err) {
             console.error("Error loading cards:", err);
