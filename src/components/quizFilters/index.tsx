@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { useQuizStore } from "../../store/quizStore";
 import { fetchFilteredCards } from "../../services/cards.service";
 import useAuth from "../../store/authStore";
 import styles from "./quizFilters.module.css";
@@ -7,14 +6,17 @@ import useDeckStore from "../../store/deckStore";
 import useTagStore from "../../store/tagStore";
 import useFiltersStore from "../../store/filtersStore";
 import { FilterDataI } from "../../utils/types";
+import useQuizCardsStore from "../../store/quizCardsStore";
+import toast from "react-hot-toast";
 
 function QuizFilters() {
     const { user } = useAuth();
-    const { setCards } = useQuizStore();
     const { selectedDeck, selectedTag, startDate, endDate, setFilters } = useFiltersStore();
 
     const fetchDescs = useDeckStore((state) => state.fetchDescs);
     const fetchTags = useTagStore((state) => state.fetchTags);
+    const setCards = useQuizCardsStore((state) => state.setCards);
+    const resetQuiz = useQuizCardsStore((state) => state.resetQuiz);
     const decks = useDeckStore((state) => state.descs);
     const tags = useTagStore((state) => state.tags);
 
@@ -25,6 +27,13 @@ function QuizFilters() {
 
     const handleSearch = async () => {
         if (!user?.id) return;
+
+        if (!selectedDeck) {
+            toast.error("Please select a deck to start the quiz.");
+            return;
+        }
+
+        resetQuiz();
 
         const filterData: FilterDataI = {
             selectedDeck,

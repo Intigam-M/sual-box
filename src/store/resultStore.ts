@@ -5,30 +5,25 @@ interface ResultStoreI {
     wrongCards: CardI[];
     correctCards: CardI[];
     extraCards: CardI[];
-    totalCards: number;
-    setResults: (wrong: CardI[], correct: CardI[], total: number) => void;
-    resetResults: () => void;
+    markCorrect: () => void;
+    markWrong: () => void;
 }
 
 const useResultStore = create<ResultStoreI>((set) => ({
     wrongCards: [],
     correctCards: [],
-    totalCards: 0,
     extraCards: [],
-    setResults: (wrong, correct, total) =>
-        set({
-            wrongCards: wrong,
-            correctCards: correct,
-            totalCards: total,
-            extraCards: [],
-        }),
-    resetResults: () =>
-        set({
-            wrongCards: [],
-            correctCards: [],
-            totalCards: 0,
-            extraCards: [],
-        }),
+
+    markCorrect: () =>
+        set((state) => ({
+            correctCards: [...state.correctCards, state.wrongCards[0]],
+            wrongCards: state.wrongCards.slice(1),
+        })),
+    markWrong: () =>
+        set((state) => ({
+            extraCards: [...state.extraCards, state.wrongCards[0]],
+            wrongCards: state.wrongCards.slice(1),
+        })),
 }));
 
 export default useResultStore;

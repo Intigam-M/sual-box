@@ -1,5 +1,6 @@
-import { FilterDataI } from "../utils/types";
+import { CardI, FilterDataI } from "../utils/types";
 import { supabase } from "../lib/supabaseClient";
+import { shuffleArray } from "../utils/helpers/shuffleArray";
 
 export const fetchFilteredCards = async (userId: string, filterData: FilterDataI) => {
     let query = supabase.from("cards").select("*, card_tags(tag_id)").eq("user_id", userId);
@@ -18,3 +19,16 @@ export const fetchFilteredCards = async (userId: string, filterData: FilterDataI
 
     return data;
 };
+
+export async function fetchExtraCardsFromSupabase(
+    deckId: string,
+    exclude: Set<string>,
+    userId: string
+): Promise<CardI[]> {
+    const { data, error } = await supabase.from("cards").select("*").eq("deck_id", deckId).eq("user_id", userId);
+
+    if (error || !data) return [];
+
+    const filtered = data.filter((card) => !exclude.has(card.id));
+    return shuffleArray(filtered).slice(0, 5);
+}
