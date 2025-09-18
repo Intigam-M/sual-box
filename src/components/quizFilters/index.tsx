@@ -13,7 +13,7 @@ function QuizFilters() {
     const { user } = useAuth();
     const { selectedDeck, selectedTag, startDate, endDate, setFilters } = useFiltersStore();
 
-    const fetchDescs = useDeckStore((state) => state.fetchDescs);
+    const fetchDecks = useDeckStore((state) => state.fetchDecks);
     const fetchTags = useTagStore((state) => state.fetchTags);
     const setCards = useQuizCardsStore((state) => state.setCards);
     const resetQuiz = useQuizCardsStore((state) => state.resetQuiz);
@@ -21,7 +21,7 @@ function QuizFilters() {
     const tags = useTagStore((state) => state.tags);
 
     useEffect(() => {
-        fetchDescs();
+        fetchDecks();
         fetchTags();
     }, []);
 
@@ -44,6 +44,7 @@ function QuizFilters() {
 
         try {
             const cards = await fetchFilteredCards(user.id, filterData);
+            console.log("Fetched cards:", cards);
             setCards(cards);
         } catch (err) {
             console.error("Error loading cards:", err);

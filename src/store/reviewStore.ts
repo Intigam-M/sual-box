@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { TagI } from "../utils/types";
 
 interface ReviewCard {
     id: string;
@@ -6,6 +7,7 @@ interface ReviewCard {
     question: string;
     answer: string;
     created_at: string;
+    card_tags: TagI[];
 }
 
 interface ReviewState {

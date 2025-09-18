@@ -12,16 +12,33 @@ import { toast } from "react-hot-toast";
 
 function ReviewPage() {
     const { user } = useAuth();
-    const { deckFilter, tagFilter, setCards, cards, startDate, endDate, searchText, setTotalCardCount, totalCardCount } = useReviewStore();
+    const {
+        deckFilter,
+        tagFilter,
+        setCards,
+        cards,
+        startDate,
+        endDate,
+        searchText,
+        setTotalCardCount,
+        totalCardCount,
+    } = useReviewStore();
 
     // Kartları gətirən funksiya
     const refetchCards = async () => {
         if (!user?.id) return;
         // Ümumi kart sayı (filtrsüz)
-        const totalRes = await supabase.from("cards").select("*", { count: "exact", head: true }).eq("user_id", user.id);
+        const totalRes = await supabase
+            .from("cards")
+            .select("*", { count: "exact", head: true })
+            .eq("user_id", user.id);
         if (totalRes.count !== null) setTotalCardCount(totalRes.count);
 
-        let query = supabase.from("cards").select("*, card_tags(tag_id)").eq("user_id", user.id).order("created_at", { ascending: false });
+        let query = supabase
+            .from("cards")
+            .select("*, card_tags(tag_id)")
+            .eq("user_id", user.id)
+            .order("created_at", { ascending: false });
 
         if (deckFilter) query = query.eq("deck_id", deckFilter);
         if (startDate) query = query.gte("created_at", startDate);
@@ -69,7 +86,10 @@ function ReviewPage() {
 
         if (!formValues) return;
 
-        const { error } = await supabase.from("cards").update({ question: formValues.question, answer: formValues.answer }).eq("id", card.id);
+        const { error } = await supabase
+            .from("cards")
+            .update({ question: formValues.question, answer: formValues.answer })
+            .eq("id", card.id);
 
         if (error) {
             toast.error("Failed to update card");
@@ -121,6 +141,7 @@ function ReviewPage() {
                                     <strong>Q:</strong> {card.question}
                                     <br />
                                     <strong>A:</strong> {card.answer}
+                                    {/* <strong>A:</strong> {card.card_tags.map((ct) => ct.name).join(", ")} */}
                                 </div>
                                 <div>
                                     <span className={styles.cardDate}>
