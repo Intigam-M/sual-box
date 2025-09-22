@@ -55,6 +55,16 @@
     color: #444;
 }
 
+.questionDiv{
+    color: #333;
+    font-size: 1rem;
+}
+.answerDiv{
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
 @media (max-width: 768px) {
     .cardItem {
         flex-direction: column; 

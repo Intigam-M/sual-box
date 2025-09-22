@@ -71,9 +71,8 @@ function ReviewPage() {
                         {cards.map((card) => (
                             <li key={card.id} className={styles.cardItem}>
                                 <div>
-                                    <strong>Q:</strong> {card.question}
-                                    <br />
-                                    <strong>A:</strong> {card.answer}
+                                    <div className={styles.answerDiv}>{card.answer}</div>
+                                    <div className={styles.questionDiv}>{card.question}</div>
                                 </div>
                                 <div>
                                     <span className={styles.cardDate}>
