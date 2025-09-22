@@ -63,9 +63,9 @@ function ReviewPage() {
                 Showing {cards.length} of {totalCardCount} cards
             </p>
 
-            <div className={styles.message}>
+            <div>
                 {cards.length === 0 ? (
-                    "No cards found. Please adjust your filters or add some cards."
+                    <p className={styles.message}>No cards found. Please adjust your filters or add some cards</p>
                 ) : (
                     <ul className={styles.cardList}>
                         {cards.map((card) => (
