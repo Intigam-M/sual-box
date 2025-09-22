@@ -9,7 +9,7 @@ import { FilterDataI } from "../../utils/types";
 import useQuizCardsStore from "../../store/quizCardsStore";
 import toast from "react-hot-toast";
 
-function QuizFilters() {
+function QuizFilters({ page }: { page: string }) {
     const { user } = useAuth();
     const { selectedDeck, selectedTag, startDate, endDate, setFilters } = useFiltersStore();
 
@@ -44,7 +44,7 @@ function QuizFilters() {
 
         try {
             const cards = await fetchFilteredCards(user.id, filterData);
-            setCards(cards);
+            setCards(cards, page);
         } catch (err) {
             console.error("Error loading cards:", err);
         }
@@ -92,7 +92,7 @@ function QuizFilters() {
             />
 
             <button onClick={handleSearch} className={styles.searchBtn}>
-                Start Quiz
+                {page === "quiz" ? "Start Quiz" : "Apply Filters"}
             </button>
         </div>
     );

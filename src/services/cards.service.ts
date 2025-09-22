@@ -32,3 +32,22 @@ export async function fetchExtraCardsFromSupabase(
     const filtered = data.filter((card) => !exclude.has(card.id));
     return shuffleArray(filtered).slice(0, 5);
 }
+
+export async function fetchTotalCardCount(userId: string): Promise<number> {
+    const { count, error } = await supabase
+        .from("cards")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", userId);
+    if (error || count === null) return 0;
+    return count;
+}
+
+export async function updateCardService(cardId: string, question: string, answer: string) {
+    const { error } = await supabase.from("cards").update({ question, answer }).eq("id", cardId);
+    if (error) throw error;
+}
+
+export async function deleteCardService(cardId: string) {
+    const { error } = await supabase.from("cards").delete().eq("id", cardId);
+    if (error) throw error;
+}

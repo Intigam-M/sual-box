@@ -1,7 +1,12 @@
 import { create } from "zustand";
 import { CardI } from "../utils/types";
 import { shuffleArray } from "../utils/helpers/shuffleArray";
-import { fetchExtraCardsFromSupabase } from "../services/cards.service";
+import {
+    fetchExtraCardsFromSupabase,
+    fetchTotalCardCount,
+    updateCardService,
+    deleteCardService,
+} from "../services/cards.service";
 import useAuth from "./authStore";
 import useFiltersStore from "./filtersStore";
 import { toast } from "react-hot-toast";
@@ -16,11 +21,15 @@ interface QuizCardsStoreI {
     flipped: boolean;
     allUsedCardIds: Set<string>;
     quizFinished: boolean;
-    setCards: (cards: CardI[]) => void;
+    totalCardCount: number;
+    setCards: (cards: CardI[], page: string) => void;
     nextCard: (answerType: "correct" | "wrong") => void;
     markWrong: () => void;
     flipCard: () => void;
     resetQuiz: () => void;
+    getTotalCardCount: () => Promise<void>;
+    updateCard: (cardId: string, question: string, answer: string) => Promise<void>;
+    deleteCard: (cardId: string) => Promise<void>;
 }
 
 const useQuizCardsStore = create<QuizCardsStoreI>((set, get) => ({
@@ -33,11 +42,19 @@ const useQuizCardsStore = create<QuizCardsStoreI>((set, get) => ({
     flipped: false,
     allUsedCardIds: new Set(),
     quizFinished: false,
-    setCards: (cards) =>
-        set({
-            cards: shuffleArray(cards),
-            allUsedCardIds: new Set(cards.map((c) => c.id)),
-        }),
+    totalCardCount: 0,
+    setCards: (cards, page) => {
+        if (page === "review") {
+            set({
+                cards,
+            });
+        } else {
+            set({
+                cards: shuffleArray(cards),
+                allUsedCardIds: new Set(cards.map((c) => c.id)),
+            });
+        }
+    },
 
     nextCard: (answerType) => {
         const { currentIndex, cards, extraCards, correctAnswerCount } = get();
@@ -111,6 +128,38 @@ const useQuizCardsStore = create<QuizCardsStoreI>((set, get) => ({
             countExtraCards: 0,
             correctAnswerCount: 0,
         }),
+
+    getTotalCardCount: async () => {
+        const userId = useAuth.getState().user?.id;
+        if (!userId) return;
+        const count = await fetchTotalCardCount(userId);
+        set({ totalCardCount: count });
+    },
+
+    updateCard: async (cardId, question, answer) => {
+        try {
+            await updateCardService(cardId, question, answer);
+            toast.success("Card updated successfully");
+            set((state) => ({
+                cards: state.cards.map((card) => (card.id === cardId ? { ...card, question, answer } : card)),
+            }));
+        } catch (error) {
+            toast.error("Failed to update card");
+        }
+    },
+
+    deleteCard: async (cardId) => {
+        try {
+            await deleteCardService(cardId);
+            toast.success("Card deleted successfully");
+            set((state) => ({
+                cards: state.cards.filter((card) => card.id !== cardId),
+                totalCardCount: state.totalCardCount - 1,
+            }));
+        } catch (error) {
+            toast.error("An error occurred while deleting the card");
+        }
+    },
 }));
 
 export default useQuizCardsStore;

@@ -23,7 +23,7 @@ function QuizPage() {
     return (
         <div>
             <Navbar />
-            <QuizFilters />
+            <QuizFilters page="quiz" />
 
             {cards.length === 0 && (
                 <div className={styles.noCardMsg}>No cards found. Please adjust your filters or add some cards.</div>

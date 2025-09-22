@@ -1,70 +1,19 @@
 import Navbar from "../../components/navbar";
-import ReviewFilters from "../../components/reviewFilters";
-import { useReviewStore } from "../../store/reviewStore";
 import styles from "./review.module.css";
-import { useEffect } from "react";
-import { supabase } from "../../lib/supabaseClient";
 import Swal from "sweetalert2";
-import useAuth from "../../store/authStore";
 import { MdEdit } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
-import { toast } from "react-hot-toast";
+import QuizFilters from "../../components/quizFilters";
+import useQuizCardsStore from "../../store/quizCardsStore";
+import { useEffect } from "react";
 
 function ReviewPage() {
-    const { user } = useAuth();
-    const {
-        deckFilter,
-        tagFilter,
-        setCards,
-        cards,
-        startDate,
-        endDate,
-        searchText,
-        setTotalCardCount,
-        totalCardCount,
-    } = useReviewStore();
-
-    // Kartları gətirən funksiya
-    const refetchCards = async () => {
-        if (!user?.id) return;
-        // Ümumi kart sayı (filtrsüz)
-        const totalRes = await supabase
-            .from("cards")
-            .select("*", { count: "exact", head: true })
-            .eq("user_id", user.id);
-        if (totalRes.count !== null) setTotalCardCount(totalRes.count);
-
-        let query = supabase
-            .from("cards")
-            .select("*, card_tags(tag_id)")
-            .eq("user_id", user.id)
-            .order("created_at", { ascending: false });
-
-        if (deckFilter) query = query.eq("deck_id", deckFilter);
-        if (startDate) query = query.gte("created_at", startDate);
-        if (endDate) query = query.lte("created_at", endDate);
-
-        const { data, error } = await query;
-        if (!data || error) return setCards([]);
-
-        let filtered = data;
-        if (tagFilter) {
-            filtered = data.filter((card: any) => card.card_tags?.some((ct: any) => ct.tag_id === tagFilter));
-        }
-
-        if (searchText.trim()) {
-            const text = searchText.trim().toLowerCase();
-            filtered = filtered.filter((card: any) => card.question.toLowerCase().includes(text));
-        }
-
-        setCards(filtered);
-    };
+    const { totalCardCount, cards, getTotalCardCount, updateCard, deleteCard } = useQuizCardsStore();
 
     useEffect(() => {
-        refetchCards();
-    }, [deckFilter, tagFilter, startDate, endDate, user, searchText]);
+        getTotalCardCount();
+    }, []);
 
-    // Redaktə funksiyası
     const handleEdit = async (card: any) => {
         const { value: formValues } = await Swal.fire({
             title: "Edit Card",
@@ -86,16 +35,7 @@ function ReviewPage() {
 
         if (!formValues) return;
 
-        const { error } = await supabase
-            .from("cards")
-            .update({ question: formValues.question, answer: formValues.answer })
-            .eq("id", card.id);
-
-        if (error) {
-            toast.error("Failed to update card");
-        } else {
-            toast.success("Card updated successfully");
-        }
+        await updateCard(card.id, formValues.question, formValues.answer);
     };
 
     const handleDelete = async (cardId: string) => {
@@ -111,20 +51,12 @@ function ReviewPage() {
         });
 
         if (!confirm.isConfirmed) return;
-
-        const { error } = await supabase.from("cards").delete().eq("id", cardId);
-
-        if (error) {
-            toast.error("An error occurred while deleting the card");
-        } else {
-            toast.success("Card deleted successfully");
-            refetchCards();
-        }
+        await deleteCard(cardId);
     };
     return (
         <div>
             <Navbar />
-            <ReviewFilters />
+            <QuizFilters page="review" />
 
             <p className={styles.resultCount}>
                 Showing {cards.length} of {totalCardCount} cards
@@ -141,7 +73,6 @@ function ReviewPage() {
                                     <strong>Q:</strong> {card.question}
                                     <br />
                                     <strong>A:</strong> {card.answer}
-                                    {/* <strong>A:</strong> {card.card_tags.map((ct) => ct.name).join(", ")} */}
                                 </div>
                                 <div>
                                     <span className={styles.cardDate}>
