@@ -25,7 +25,7 @@ function QuizFilters({ page }: { page: string }) {
         fetchTags();
     }, []);
 
-    const handleSearch = async () => {
+    const handleFilter = async () => {
         if (!user?.id) return;
 
         if (!selectedDeck) {
@@ -91,7 +91,7 @@ function QuizFilters({ page }: { page: string }) {
                 className={styles.dateInput}
             />
 
-            <button onClick={handleSearch} className={styles.searchBtn}>
+            <button onClick={handleFilter} className={styles.searchBtn}>
                 {page === "quiz" ? "Start Quiz" : "Apply Filters"}
             </button>
         </div>

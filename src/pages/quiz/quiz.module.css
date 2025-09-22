@@ -4,9 +4,12 @@
     color: #065f46;
     padding: 1rem 5rem;
     font-size: 1.1rem;
-    margin: 0 auto;
+    margin: 1rem auto;
     border-radius: 0.5rem;
     width: fit-content;
+    max-width: 100%; 
+    box-sizing: border-box;
+    text-align: center;
 }
 
 .quizContainer {
@@ -14,12 +17,15 @@
     flex-direction: column;
     align-items: center;
     margin-top: 2rem;
+    padding: 2rem 2rem; 
+    box-sizing: border-box;
 }
 
 .card {
-    width: 600px;
+    width: 100%;
+    max-width: 600px;
     height: 200px;
-    padding: 0 2rem;
+    padding: 0 1rem;
     background-color: white;
     border: 2px solid #2563eb;
     border-radius: 1rem;
@@ -32,6 +38,7 @@
     margin-bottom: 2rem;
     transition: transform 0.4s;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    text-align: center;
 }
 
 .flipped {
@@ -42,32 +49,38 @@
     display: flex;
     gap: 1rem;
     margin-bottom: 1rem;
+    flex-wrap: wrap; 
+    justify-content: center;
+}
+
+.correctBtn,
+.wrongBtn {
+    flex: 1 1 auto;
+    min-width: 120px;
+    text-align: center;
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-size: 1rem;
 }
 
 .correctBtn {
     background-color: #22c55e;
     color: white;
-    padding: 0.7rem 1.5rem;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
 }
 
 .wrongBtn {
     background-color: #ef4444;
     color: white;
-    padding: 0.7rem 1.5rem;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
 }
 
 .stats {
     font-size: 1rem;
     color: #444;
     margin-top: 1rem;
+    text-align: center;
 }
-
 
 .noCardMsg {
     font-size: 1.2rem;
@@ -76,3 +89,20 @@
     text-align: center;
 }
 
+@media (max-width: 768px) {
+    .card {
+        min-height: 150px;
+        padding: 1rem;
+        font-size: 1rem;
+    }
+
+    .result {
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    .correctBtn,
+    .wrongBtn {
+        width: 100%;
+    }
+}
