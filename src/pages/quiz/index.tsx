@@ -2,6 +2,7 @@ import Navbar from "../../components/navbar";
 import QuizFilters from "../../components/quizFilters";
 import styles from "./quiz.module.css";
 import useQuizCardsStore from "../../store/quizCardsStore";
+import { useEffect } from "react";
 
 function QuizPage() {
     const {
@@ -16,9 +17,13 @@ function QuizPage() {
         flipCard,
         nextCard,
         markWrong,
+        setCards,
     } = useQuizCardsStore();
 
     const currentCard = cards[currentIndex];
+    useEffect(() => {
+        setCards([], "quiz");
+    }, []);
 
     return (
         <div>

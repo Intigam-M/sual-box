@@ -8,10 +8,11 @@ import useQuizCardsStore from "../../store/quizCardsStore";
 import { useEffect } from "react";
 
 function ReviewPage() {
-    const { totalCardCount, cards, getTotalCardCount, updateCard, deleteCard } = useQuizCardsStore();
+    const { totalCardCount, cards, getTotalCardCount, updateCard, deleteCard, setCards } = useQuizCardsStore();
 
     useEffect(() => {
         getTotalCardCount();
+        setCards([], "review");
     }, []);
 
     const handleEdit = async (card: any) => {
