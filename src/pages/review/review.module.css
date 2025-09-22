@@ -57,12 +57,13 @@
 
 .questionDiv{
     color: #333;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 .answerDiv{
+    color: #007acc;
     font-weight: 600;
     margin-bottom: 0.5rem;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
 }
 
 @media (max-width: 768px) {
