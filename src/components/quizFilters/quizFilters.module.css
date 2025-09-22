@@ -7,10 +7,10 @@
 }
 
 .select, .dateInput {
-    padding: 0.6rem;
+    padding: 0.3rem;
     font-size: 1rem;
     border: 1px solid #ccc;
-    border-radius: 0.5rem;
+    border-radius: 0.2rem;
     box-sizing: border-box; 
 }
 
@@ -19,7 +19,7 @@
     color: white;
     padding: 0.6rem 1.2rem;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: 0.2rem;
     font-weight: 600;
     cursor: pointer;
     white-space: nowrap;

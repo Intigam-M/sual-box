@@ -2,15 +2,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.2rem 2rem;
+    padding: 0.1rem 2rem;
     background-color: #fff;
     border-bottom: 1px solid #ddd;
+    overflow:  auto;
 }
 
 .logo {
     color: #2563eb;
     font-size: 1.5rem;
     font-weight: bold;
+    white-space: nowrap; 
+
 }
 
 .nav a {
@@ -45,4 +48,8 @@
 .signOut:hover {
     background: #2563eb;
     color: white;
+}
+
+.nav{
+    white-space: nowrap; 
 }
