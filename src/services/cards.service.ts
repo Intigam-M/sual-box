@@ -3,7 +3,11 @@ import { supabase } from "../lib/supabaseClient";
 import { shuffleArray } from "../utils/helpers/shuffleArray";
 
 export const fetchFilteredCards = async (userId: string, filterData: FilterDataI) => {
-    let query = supabase.from("cards").select("*, card_tags(tag_id)").eq("user_id", userId);
+    let query = supabase
+        .from("cards")
+        .select("*, card_tags(tag_id)")
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false });
 
     if (filterData.selectedDeck) query = query.eq("deck_id", filterData.selectedDeck);
     if (filterData.startDate) query = query.gte("created_at", filterData.startDate);
