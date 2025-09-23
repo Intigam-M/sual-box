@@ -3,19 +3,20 @@
     justify-content: center;
     gap: 1rem;
     margin: 2rem 3rem;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 
-.select, .dateInput {
+.select,
+.dateInput {
     padding: 0.3rem;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 0.2rem;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 
 .searchBtn {
-    background-color: #2563eb;
+    background-color: #25eb49;
     color: white;
     padding: 0.6rem 1.2rem;
     border: none;
